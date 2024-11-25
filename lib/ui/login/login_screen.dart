@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:to_do_app/firebase/firebase_auth_codes.dart';
 import 'package:to_do_app/style/dialog_utils.dart';
+import 'package:to_do_app/ui/home/home_screen.dart';
 import '../../style/reusable_components/custom_button.dart';
 import '../../style/reusable_components/custom_text_field.dart';
 import '../../style/validation.dart';
@@ -44,12 +45,13 @@ class _LoginScreenState extends State<LoginScreen> {
       decoration: const BoxDecoration(
         color: Colors.white,
         image: DecorationImage(
-          image: AssetImage('assets/images/background 1.png'),
+          image: AssetImage('assets/images/background.png'),
           fit: BoxFit.fill,
         ),
       ),
       child: Scaffold(
         appBar: AppBar(
+          elevation: 0,
           backgroundColor: Colors.transparent,
           title: const Text('Login'),
           titleTextStyle: const TextStyle(
@@ -133,27 +135,28 @@ class _LoginScreenState extends State<LoginScreen> {
           email: emailController.text,
           password: passwordController.text,
         );
+        // FirebaseAuth.instance.currentUser
         Navigator.pop(context);
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          HomeScreen.routeName,
+          (route) => false,
+        );
         print('sign in success:${userCredential.user?.uid}');
       } on FirebaseAuthException catch (e) {
         Navigator.pop(context);
         if (e.code == FirebaseAuthCodes.userNotFound) {
-
+          DialogUtils.showMessageDialog(context,
+              message: 'No User Found For That Email.',
+              positiveActionTitle: 'Ok', positiveActionClick: (context) {
+            Navigator.pop(context);
+          });
         } else if (e.code == FirebaseAuthCodes.wrongPass) {
-          showDialog(
-            context: context,
-            builder: (context) => AlertDialog(
-              content: const Text('Wrong password provided for that user.'),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: const Text('Ok'),
-                ),
-              ],
-            ),
-          );
+          DialogUtils.showMessageDialog(context,
+              message: 'Wrong password provided for that user.',
+              positiveActionTitle: 'Ok', positiveActionClick: (context) {
+            Navigator.pop(context);
+          });
         }
       }
     }

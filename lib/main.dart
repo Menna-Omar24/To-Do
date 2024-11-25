@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:to_do_app/style/app_style.dart';
+import 'package:to_do_app/ui/home/home_screen.dart';
 import 'package:to_do_app/ui/login/login_screen.dart';
 import 'package:to_do_app/ui/sign_up/register_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:to_do_app/ui/splash/splash_screen.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -23,10 +25,12 @@ class ToDo extends StatelessWidget {
       theme: AppStyle.lightTheme,
       themeMode: ThemeMode.light,
       routes: {
+        SplashScreen.routeName: (_) => const SplashScreen(),
         LoginScreen.routeName: (_) => const LoginScreen(),
         RegisterScreen.routeName: (_) => const RegisterScreen(),
+        HomeScreen.routeName: (_) => const HomeScreen(),
       },
-      initialRoute: LoginScreen.routeName,
+      initialRoute: SplashScreen.routeName,
     );
   }
 }

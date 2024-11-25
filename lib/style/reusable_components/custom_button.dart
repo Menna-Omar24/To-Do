@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:to_do_app/style/app_colors.dart';
 
 class CustomButton extends StatelessWidget {
   void Function() onPress;
@@ -18,7 +19,7 @@ class CustomButton extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(height * 0.01),
         ),
-        backgroundColor: Theme.of(context).colorScheme.primary,
+        backgroundColor: AppColors.lightPrimaryColor,
       ),
       onPressed: onPress,
       child: Padding(
