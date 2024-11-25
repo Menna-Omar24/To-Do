@@ -8,6 +8,7 @@ class CustomTextField extends StatefulWidget {
   final TextEditingController controller;
   final bool isPassword;
   final ValidationFunction validator;
+  final int? maxLines;
 
   const CustomTextField({
     super.key,
@@ -16,6 +17,7 @@ class CustomTextField extends StatefulWidget {
     required this.controller,
     this.isPassword = false,
     required this.validator,
+    this.maxLines = 1,
   });
 
   @override
@@ -31,6 +33,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       validator: widget.validator,
       obscuringCharacter: '*',
       obscureText: widget.isPassword ? isVisible : false,
+      maxLines: widget.maxLines,
       keyboardType: widget.keyword,
       controller: widget.controller,
       style: Theme.of(context).textTheme.titleSmall,

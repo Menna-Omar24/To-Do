@@ -1,6 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:to_do_app/firebase/firestore_handler.dart';
+import 'package:to_do_app/firebase/model/user.dart' as MyUser;
 import 'package:to_do_app/style/dialog_utils.dart';
+import 'package:to_do_app/ui/home/home_screen.dart';
 
 import '../../firebase/firebase_auth_codes.dart';
 import '../../style/reusable_components/custom_button.dart';
@@ -19,6 +22,7 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   late TextEditingController nameController;
   late TextEditingController emailController;
+  late TextEditingController ageController;
   late TextEditingController passwordController;
   late TextEditingController passwordConfirmController;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -29,6 +33,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     super.initState();
     nameController = TextEditingController();
     emailController = TextEditingController();
+    ageController = TextEditingController();
     passwordController = TextEditingController();
     passwordConfirmController = TextEditingController();
   }
@@ -39,6 +44,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     super.dispose();
     nameController.dispose();
     emailController.dispose();
+    ageController.dispose();
     passwordController.dispose();
     passwordConfirmController.dispose();
   }
@@ -50,7 +56,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       decoration: const BoxDecoration(
         color: Colors.white,
         image: DecorationImage(
-          image: AssetImage('assets/images/background 1.png'),
+          image: AssetImage('assets/images/background.png'),
           fit: BoxFit.fill,
         ),
       ),
@@ -64,6 +70,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             fontSize: 20,
           ),
           centerTitle: true,
+          elevation: 0,
           iconTheme: const IconThemeData(
             color: Colors.white,
           ),
@@ -96,6 +103,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       controller: emailController,
                       validator: Validation.emailValidator,
                     ),
+                    SizedBox(
+                      height: height * 0.02,
+                    ),
+                    CustomTextField(
+                        label: 'Age',
+                        keyword: TextInputType.number,
+                        controller: ageController,
+                        validator: (value) {
+                          Validation.fullNameValidator(
+                              value, 'Please Enter Your Age');
+                        }),
                     SizedBox(
                       height: height * 0.02,
                     ),
@@ -157,11 +175,34 @@ class _RegisterScreenState extends State<RegisterScreen> {
         email: emailController.text,
         password: passwordController.text,
       );
+     await FireStoreHandler.createUser(
+        MyUser.User(
+          id: userCredential.user!.uid,
+          age: int.parse(ageController.text),
+          email: emailController.text,
+          fullName: nameController.text,
+        ),
+      );
+      Navigator.pop(context);
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        HomeScreen.routeName,
+        (route) => false,
+      );
     } on FirebaseAuthException catch (e) {
+      Navigator.pop(context);
       if (e.code == FirebaseAuthCodes.weakPass) {
-        print('The password provided is too weak.');
+        DialogUtils.showMessageDialog(context,
+            message: 'The password provided is too weak.',
+            positiveActionTitle: 'Ok', positiveActionClick: (context) {
+          Navigator.pop(context);
+        });
       } else if (e.code == FirebaseAuthCodes.emailAlreadyInUse) {
-        print('The account already exists for that email.');
+        DialogUtils.showMessageDialog(context,
+            message: 'The account already exists for that email.',
+            positiveActionTitle: 'Ok', positiveActionClick: (context) {
+          Navigator.pop(context);
+        });
       }
     } catch (error) {}
   }
