@@ -55,14 +55,15 @@ class FireStoreHandler {
 
   static Stream<List<Task>> getTasksListen(
       String userId, DateTime selectedDate) async* {
-    print(selectedDate.toString());
-    var newDate = Timestamp.fromDate(selectedDate.copyWith(
-      hour: 0,
-      microsecond: 0,
-      millisecond: 0,
-      second: 0,
-      minute: 0,
-    ));
+    var newDate = Timestamp.fromDate(
+      selectedDate.copyWith(
+        hour: 0,
+        microsecond: 0,
+        millisecond: 0,
+        second: 0,
+        minute: 0,
+      ),
+    );
     var collection = getTasksCollection(userId).where(
       'date',
       isEqualTo: newDate,

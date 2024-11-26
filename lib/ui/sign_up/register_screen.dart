@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:to_do_app/firebase/firestore_handler.dart';
-import 'package:to_do_app/firebase/model/user.dart' as MyUser;
+import 'package:to_do_app/firebase/model/user.dart' as my_user;
 import 'package:to_do_app/style/dialog_utils.dart';
 import 'package:to_do_app/ui/home/home_screen.dart';
 
@@ -176,7 +176,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         password: passwordController.text,
       );
      await FireStoreHandler.createUser(
-        MyUser.User(
+        my_user.User(
           id: userCredential.user!.uid,
           age: int.parse(ageController.text),
           email: emailController.text,

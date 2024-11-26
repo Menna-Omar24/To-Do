@@ -125,7 +125,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
           Task(
             title: titleController.text,
             description: descriptionController.text,
-            date: Timestamp.fromMicrosecondsSinceEpoch(
+            date: Timestamp.fromMillisecondsSinceEpoch(
               selectedDate!.millisecondsSinceEpoch,
             ),
           ),

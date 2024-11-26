@@ -19,81 +19,84 @@ class TaskItem extends StatefulWidget {
 class _TaskItemState extends State<TaskItem> {
   @override
   Widget build(BuildContext context) {
-    return Slidable(
-      startActionPane: ActionPane(
-        extentRatio: 0.2,
-        motion: const BehindMotion(),
-        children: [
-          SlidableAction(
-            onPressed: (context) {
-              deleteTask();
-            },
-            borderRadius: const BorderRadius.only(
-              bottomLeft: Radius.circular(15),
-              topLeft: Radius.circular(15),
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Slidable(
+        startActionPane: ActionPane(
+          extentRatio: 0.2,
+          motion: const BehindMotion(),
+          children: [
+            SlidableAction(
+              onPressed: (context) {
+                deleteTask();
+              },
+              borderRadius: const BorderRadius.only(
+                bottomLeft: Radius.circular(15),
+                topLeft: Radius.circular(15),
+              ),
+              backgroundColor: Colors.redAccent,
+              icon: Icons.delete,
+              label: 'delete',
             ),
-            backgroundColor: Colors.redAccent,
-            icon: Icons.delete,
-            label: 'delete',
-          ),
-        ],
-      ),
-      child: Container(
-        padding: const EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(15),
+          ],
         ),
-        child: IntrinsicHeight(
-          child: Row(
-            children: [
-              Container(
-                width: 5,
-                height: double.infinity,
-                decoration: BoxDecoration(
-                  color: AppColors.lightPrimaryColor,
-                  borderRadius: BorderRadius.circular(10),
+        child: Container(
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: IntrinsicHeight(
+            child: Row(
+              children: [
+                Container(
+                  width: 5,
+                  height: double.infinity,
+                  decoration: BoxDecoration(
+                    color: AppColors.lightPrimaryColor,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                 ),
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      widget.task.title ?? "",
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Text(
-                      widget.task.description ?? "",
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            color: Colors.black,
-                            fontSize: 14,
-                          ),
-                    ),
-                  ],
+                const SizedBox(
+                  width: 10,
                 ),
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.lightPrimaryColor,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        widget.task.title ?? "",
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Text(
+                        widget.task.description ?? "",
+                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                              color: Colors.black,
+                              fontSize: 14,
+                            ),
+                      ),
+                    ],
+                  ),
                 ),
-                onPressed: () {},
-                child: const Icon(
-                  Icons.check,
+                const SizedBox(
+                  width: 10,
                 ),
-              ),
-            ],
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.lightPrimaryColor,
+                  ),
+                  onPressed: () {},
+                  child: const Icon(
+                    Icons.check,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
