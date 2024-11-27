@@ -55,14 +55,15 @@ class FireStoreHandler {
 
   static Stream<List<Task>> getTasksListen(
       String userId, DateTime selectedDate) async* {
-    print(selectedDate.toString());
-    var newDate = Timestamp.fromDate(selectedDate.copyWith(
-      hour: 0,
-      microsecond: 0,
-      millisecond: 0,
-      second: 0,
-      minute: 0,
-    ));
+    var newDate = Timestamp.fromDate(
+      selectedDate.copyWith(
+        hour: 0,
+        microsecond: 0,
+        millisecond: 0,
+        second: 0,
+        minute: 0,
+      ),
+    );
     var collection = getTasksCollection(userId).where(
       'date',
       isEqualTo: newDate,
@@ -76,5 +77,18 @@ class FireStoreHandler {
   static Future<void> deleteTask(String userId, String taskId) {
     var collection = getTasksCollection(userId);
     return collection.doc(taskId).delete();
+  }
+
+  static Future<void> isDone(Task task, String uId) {
+    var collection = getTasksCollection(uId);
+    return collection.doc(task.id).update({
+      'isDone': !task.isDone!,
+    });
+  }
+
+  static Future<void> updateTask(Task task,String uId) {
+    return getTasksCollection(uId).doc(task.id).update(
+          task.toFireStore(),
+        );
   }
 }

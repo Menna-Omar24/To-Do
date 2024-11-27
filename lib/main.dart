@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:to_do_app/style/app_style.dart';
 import 'package:to_do_app/ui/home/home_screen.dart';
+import 'package:to_do_app/ui/edit_task/edit_task.dart';
 import 'package:to_do_app/ui/login/login_screen.dart';
 import 'package:to_do_app/ui/sign_up/register_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -29,6 +30,7 @@ class ToDo extends StatelessWidget {
         LoginScreen.routeName: (_) => const LoginScreen(),
         RegisterScreen.routeName: (_) => const RegisterScreen(),
         HomeScreen.routeName: (_) => const HomeScreen(),
+        EditTask.routeName: (_) => const EditTask(),
       },
       initialRoute: SplashScreen.routeName,
     );
