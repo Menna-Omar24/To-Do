@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:to_do_app/style/app_colors.dart';
 
 typedef ValidationFunction = String? Function(String?);
 
@@ -49,7 +50,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                   isVisible
                       ? Icons.visibility_outlined
                       : Icons.visibility_off_outlined,
-                  color: Theme.of(context).colorScheme.primary,
+                  color: AppColors.lightPrimaryColor,
                 ),
               )
             : null,

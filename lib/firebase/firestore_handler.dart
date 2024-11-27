@@ -78,4 +78,17 @@ class FireStoreHandler {
     var collection = getTasksCollection(userId);
     return collection.doc(taskId).delete();
   }
+
+  static Future<void> isDone(Task task, String uId) {
+    var collection = getTasksCollection(uId);
+    return collection.doc(task.id).update({
+      'isDone': !task.isDone!,
+    });
+  }
+
+  static Future<void> updateTask(Task task,String uId) {
+    return getTasksCollection(uId).doc(task.id).update(
+          task.toFireStore(),
+        );
+  }
 }

@@ -5,6 +5,7 @@ class AppStyle {
   static ThemeData lightTheme = ThemeData(
     scaffoldBackgroundColor: AppColors.lightBackground,
     appBarTheme: const AppBarTheme(
+      elevation: 0,
       backgroundColor: AppColors.lightPrimaryColor,
       toolbarHeight: 157,
       titleTextStyle: TextStyle(
@@ -24,7 +25,7 @@ class AppStyle {
     ),
     textTheme: const TextTheme(
       labelSmall: TextStyle(
-        fontSize: 12,
+        fontSize: 14,
         color: AppColors.labelColor,
       ),
       titleSmall: TextStyle(
@@ -40,6 +41,11 @@ class AppStyle {
         fontSize: 14,
         fontWeight: FontWeight.w600,
         color: Colors.white,
+      ),
+      bodyLarge: TextStyle(
+        fontSize: 22,
+        fontWeight: FontWeight.w700,
+        color: AppColors.green,
       ),
     ),
     colorScheme: ColorScheme.fromSeed(
